@@ -17,6 +17,11 @@ RETURNS TRIGGER AS $$
 BEGIN
     INSERT INTO library.orders_copies_history (order_id, copy_id)
     VALUES (OLD.order_id, OLD.copy_id);
+
+    UPDATE library.copies
+    SET is_stored = TRUE
+    WHERE copy_id = OLD.copy_id;
+
     RETURN OLD;
 END;
 $$ LANGUAGE plpgsql;

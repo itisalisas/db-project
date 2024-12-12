@@ -1,3 +1,5 @@
+CREATE SCHEMA views;
+
 CREATE VIEW views.v_readers AS
 SELECT
     name,
@@ -8,14 +10,12 @@ FROM library.readers;
 
 CREATE VIEW views.v_authors AS
 SELECT
-    author_id,
     name,
     biography
 FROM library.authors;
 
 CREATE VIEW views.v_employees AS
 SELECT
-    employee_id,
     name,
     position,
     hire_date
@@ -23,14 +23,12 @@ FROM library.employees;
 
 CREATE VIEW views.v_genres AS
 SELECT
-    genre_id,
     genre_name,
     description
 FROM library.genres;
 
 CREATE VIEW views.v_publishers AS
 SELECT
-    publisher_id,
     name,
     address,
     CONCAT(SUBSTR(contact_info, 1, 5), REPEAT('*', LENGTH(contact_info) - 9), SUBSTR(contact_info, LENGTH(contact_info) - 3)) AS masked_contact_info
@@ -38,7 +36,6 @@ FROM library.publishers;
 
 CREATE VIEW views.v_books AS
 SELECT
-    book_id,
     title,
     published_year,
     description,
@@ -53,7 +50,6 @@ FROM library.authors_books;
 
 CREATE VIEW views.v_orders AS
 SELECT
-    order_id,
     employee_id,
     reader_id,
     taken_at
@@ -61,7 +57,6 @@ FROM library.orders;
 
 CREATE VIEW views.v_copies AS
 SELECT
-    copy_id,
     publisher_id,
     book_id,
     is_stored
@@ -69,7 +64,6 @@ FROM library.copies;
 
 CREATE VIEW views.v_orders_history AS
 SELECT
-    order_id,
     employee_id,
     reader_id,
     taken_at,

@@ -12,7 +12,7 @@ DELETE FROM library.readers WHERE passport = '3456789012';
 INSERT INTO library.books (title, published_year, description, genre_id) VALUES
 ('Новая книга', 2023, 'Описание новой книги', 1);
 
-SELECT * FROM library.books WHERE genre_id = 2;
+SELECT COUNT(*) FROM library.books WHERE genre_id = 2;
 
 UPDATE library.books
 SET description = 'Обновлённое описание книги', published_year = 2024

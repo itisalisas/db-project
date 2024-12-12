@@ -1,9 +1,8 @@
-
 -- 1. Статистика выданных книг по жанрам
 -- Это представление получает информацию о количестве выданных книг каждого жанра. 
 -- Оно связывает таблицы orders, orders_copies, copies, books, и genres. 
 
-CREATE VIEW library.genre_issue_statistics AS
+CREATE VIEW views.genre_issue_statistics AS
 SELECT 
     genres.genre_name AS genre_name,
     COUNT(orders.order_id) AS total_issues
@@ -18,31 +17,35 @@ INNER JOIN
 INNER JOIN 
     library.genres AS genres ON books.genre_id = genres.genre_id
 GROUP BY 
-    genres.genre_name;
+    genres.genre_name
+ORDER BY total_issues;
 
 -- 2. Среднее время возврата книг
 -- Это представление вычисляет среднее время возврата книг. 
 -- Оно связывает таблицы orders, orders_history, и orders_copies_history.
 
-CREATE VIEW library.average_return_time AS
-SELECT 
-    orders.order_id AS order_id,
-    AVG(DATE_PART('day', orders_copies_history.returned_at - orders_history.taken_at)) AS avg_return_time_days
+CREATE VIEW views.average_return_time AS
+SELECT books.title, 
+       AVG(EXTRACT(EPOCH FROM (orders_history.returned_at - orders_history.taken_at))) / 86400 AS average_return_days
 FROM 
-    library.orders AS orders
+    library.books
 INNER JOIN 
-    library.orders_history AS orders_history ON orders.order_id = orders_history.order_id
+    library.copies ON books.book_id = copies.book_id
 INNER JOIN 
-    library.orders_copies_history AS orders_copies_history ON orders.order_id = orders_copies_history.order_id
+    library.orders_copies_history ON copies.copy_id = orders_copies_history.copy_id
+INNER JOIN 
+    library.orders_history ON orders_copies_history.order_id = orders_history.order_id
 WHERE 
-    orders_copies_history.returned_at IS NOT NULL
+    orders_history.returned_at IS NOT NULL
 GROUP BY 
-    orders.order_id;
+    books.title
+ORDER BY 
+    books.title;
 
 -- 3. Количество книг в библиотеке по издательствам
 -- Представление дает информацию о количестве книг от каждого издательства, находящихся в библиотеке.
 
-CREATE VIEW library.publisher_book_count AS
+CREATE VIEW views.publisher_book_count AS
 SELECT 
     publishers.name AS publisher_name,
     COUNT(copies.copy_id) AS total_stored_books
@@ -55,4 +58,6 @@ INNER JOIN
 WHERE 
     copies.is_stored = TRUE
 GROUP BY 
-    publishers.name;
+    publishers.name
+ORDER BY 
+    COUNT(copies.copy_id);

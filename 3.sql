@@ -70,11 +70,11 @@ CREATE TABLE library.copies (
 );
 
 CREATE TABLE library.orders_history (
-    order_id SERIAL PRIMARY KEY,
+    order_id INT PRIMARY KEY,
     employee_id INT,
     reader_id INT,
     taken_at TIMESTAMP NOT NULL,
-    returned_at TIMESTAMP,
+    returned_at TIMESTAMP NOT NULL,
     CONSTRAINT check_returned_at CHECK (returned_at IS NULL OR returned_at > taken_at),
     CONSTRAINT fk_orders_history_employee FOREIGN KEY (employee_id) REFERENCES library.employees (employee_id),
     CONSTRAINT fk_orders_history_reader FOREIGN KEY (reader_id) REFERENCES library.readers (reader_id)
@@ -84,8 +84,8 @@ CREATE TABLE library.orders_copies (
     order_id INT NOT NULL,
     copy_id INT NOT NULL,
     PRIMARY KEY (order_id, copy_id),
-    CONSTRAINT fk_orders_copies_order FOREIGN KEY (order_id) REFERENCES library.orders (order_id),
-    CONSTRAINT fk_orders_copies_copy FOREIGN KEY (copy_id) REFERENCES library.copies (copy_id)
+    CONSTRAINT fk_orders_copies_order FOREIGN KEY (order_id) REFERENCES library.orders (order_id) ON DELETE CASCADE,
+    CONSTRAINT fk_orders_copies_copy FOREIGN KEY (copy_id) REFERENCES library.copies (copy_id),
 );
 
 CREATE TABLE library.orders_copies_history (
