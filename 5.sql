@@ -1,7 +1,7 @@
 INSERT INTO library.readers (name, address, contact, passport) VALUES
 ('Алексей Ковалёв', 'ул. Новая, 10', '+79991234567', '3456789012');
 
-SELECT * FROM library.readers WHERE passport = '1234567890';
+SELECT name, contact FROM library.readers WHERE passport = '1234567890';
 
 UPDATE library.readers
 SET contact = '+79990001122'
