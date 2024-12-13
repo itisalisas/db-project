@@ -1,3 +1,4 @@
+DROP SCHEMA IF EXISTS library CASCADE;
 CREATE SCHEMA library;
 
 CREATE TABLE library.readers (
