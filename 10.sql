@@ -36,7 +36,6 @@ CALL library.find_overdue_orders();
 
 -- Вывод книг, у которых сейчас нет копий, находящихся в библиотеке
 CREATE OR REPLACE PROCEDURE library.find_books_with_no_available_copies()
-LANGUAGE plpgsql
 AS $$
 DECLARE
     rec RECORD;
@@ -54,6 +53,7 @@ BEGIN
     LOOP
         RAISE NOTICE 'Book ID: %, Title: % has no available copies.', rec.book_id, rec.title;
     END LOOP;
-END $$;
+END $$
+LANGUAGE plpgsql;
 
 CALL library.find_books_with_no_available_copies();
