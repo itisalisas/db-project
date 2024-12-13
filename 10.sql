@@ -34,7 +34,7 @@ LANGUAGE plpgsql;
 
 CALL library.find_overdue_orders();
 
--- Вывоод книг, у которых сейчас нет копий, находящихся в библиотеке
+-- Вывод книг, у которых сейчас нет копий, находящихся в библиотеке
 CREATE OR REPLACE PROCEDURE library.find_books_with_no_available_copies()
 LANGUAGE plpgsql
 AS $$
