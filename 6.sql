@@ -26,9 +26,9 @@ ORDER BY b.published_year, title_length DESC;
 -- Запрос 3
 -- Описание: На основе истории заказов определить 5 самых активных читателей, которые взяли наибольшее количество 
 -- книг, и вывести их имена, контактные данные и общее количество взятых книг.
-SELECT r.name, r.contact, COUNT(o.order_id) AS total_books_borrowed
+SELECT r.name, r.contact, COUNT(oh.order_id) AS total_books_borrowed
 FROM library.readers r
-INNER JOIN library.orders o ON r.reader_id = o.reader_id
+INNER JOIN library.orders_history oh ON r.reader_id = oh.reader_id
 GROUP BY r.name, r.contact
 ORDER BY total_books_borrowed DESC
 LIMIT 5;

@@ -1,4 +1,4 @@
--- 1. Статистика выданных книг по жанрам
+-- 1. Статистика выданных на данный момент книг по жанрам
 -- Это представление получает информацию о количестве выданных книг каждого жанра. 
 -- Оно связывает таблицы orders, orders_copies, copies, books, и genres. 
 
@@ -20,7 +20,7 @@ GROUP BY
     genres.genre_name
 ORDER BY total_issues;
 
--- 2. Среднее время возврата книг
+-- 2. Среднее время возврата книг (в днях)
 -- Это представление вычисляет среднее время возврата книг. 
 -- Оно связывает таблицы orders, orders_history, и orders_copies_history.
 
@@ -60,4 +60,4 @@ WHERE
 GROUP BY 
     publishers.name
 ORDER BY 
-    COUNT(copies.copy_id);
+    COUNT(copies.copy_id) DESC;

@@ -85,7 +85,7 @@ CREATE TABLE library.orders_copies (
     copy_id INT NOT NULL,
     PRIMARY KEY (order_id, copy_id),
     CONSTRAINT fk_orders_copies_order FOREIGN KEY (order_id) REFERENCES library.orders (order_id) ON DELETE CASCADE,
-    CONSTRAINT fk_orders_copies_copy FOREIGN KEY (copy_id) REFERENCES library.copies (copy_id),
+    CONSTRAINT fk_orders_copies_copy FOREIGN KEY (copy_id) REFERENCES library.copies (copy_id)
 );
 
 CREATE TABLE library.orders_copies_history (
